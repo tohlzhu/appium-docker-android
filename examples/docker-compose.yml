@@ -9,6 +9,7 @@ services:
     image: seleniarm/hub
     ports:
       - 4444:4444
+      - 7900:7900
 
   # Appium Docker Android  
   appium_android_device:
