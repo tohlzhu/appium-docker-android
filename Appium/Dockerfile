@@ -62,7 +62,7 @@ RUN apt-get -qqy update && \
 #===============
 # Set JAVA_HOME
 #===============
-ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre" \
+ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-arm64/jre" \
     PATH=$PATH:$JAVA_HOME/bin
 
 #=====================
