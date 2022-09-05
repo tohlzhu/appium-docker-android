@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=ubuntu:bionic-20220801
+ARG BASE_IMAGE=ubuntu:22.04
 
 FROM ${BASE_IMAGE}
 
@@ -41,6 +41,8 @@ WORKDIR /root
 #   Encryption software. It is needed for nodejs
 # salt-minion
 #   Infrastructure management (client-side)
+# adb
+#   for replacement of sdkmanager "platform-tools"
 #==================
 RUN apt-get -qqy update && \
     apt dist-upgrade -y && \
@@ -57,12 +59,17 @@ RUN apt-get -qqy update && \
     xvfb \
     gnupg \
     salt-minion \
+    adb \
   && rm -rf /var/lib/apt/lists/*
+
+# 1. Launch EC2 ARM based Instance (a1.metal / a1.2xlarge): (16 Gb RAM, 32Gb Disk), Ubuntu Server 22.04 LTS (HVM) ARM x64
+# 2. sudo apt update && sudo apt upgrade
+# 3. sudo apt install default-jdk python3-pip repo python-is-python3 unzip libpcre2-dev adb
 
 #===============
 # Set JAVA_HOME
 #===============
-ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre" \
+ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-arm64/jre" \
     PATH=$PATH:$JAVA_HOME/bin
 
 #=====================
@@ -83,7 +90,8 @@ ENV PATH=$PATH:${ANDROID_TOOL_HOME}/tools:${ANDROID_TOOL_HOME}/tools/bin
 # https://askubuntu.com/questions/885658/android-sdk-repositories-cfg-could-not-be-loaded
 RUN mkdir -p ~/.android && \
     touch ~/.android/repositories.cfg && \
-    echo y | sdkmanager "platform-tools" && \
+#    echo y | sdkmanager "platform-tools" && \
+    mkdir ${ANDROID_HOME}/platform-tools \
     echo y | sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION"
 ENV PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools
 
