@@ -47,7 +47,8 @@ WORKDIR /root
 RUN apt-get -qqy update && \
     apt dist-upgrade -y && \
     apt-get -qqy --no-install-recommends install \
-    openjdk-8-jdk \
+ #   openjdk-8-jdk \
+    default-jdk \
     ca-certificates \
     tzdata \
     zip \
@@ -69,23 +70,27 @@ RUN apt-get -qqy update && \
 #===============
 # Set JAVA_HOME
 #===============
-ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-arm64/jre" \
+# ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-arm64/jre" \
+ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-arm64" \
     PATH=$PATH:$JAVA_HOME/bin
 
 #=====================
 # Install Android SDK
 #=====================
+#ENV ANDROID_DOWNLOAD_PATH=/root \
+#    ANDROID_HOME=/opt/android \
+#    ANDROID_TOOL_HOME=/opt/android/cmdline-tools
 ENV ANDROID_DOWNLOAD_PATH=/root \
-    ANDROID_HOME=/opt/android \
-    ANDROID_TOOL_HOME=/opt/android/cmdline-tools
+    ANDROID_HOME=/opt/android-sdk \
+    ANDROID_TOOL_HOME=/opt/android-sdk/cmdline-tools
 
 RUN wget -O tools.zip https://dl.google.com/android/repository/${SDK_VERSION}.zip && \
     unzip tools.zip && rm tools.zip && \
     chmod a+x -R ${ANDROID_DOWNLOAD_PATH} && \
     chown -R root:root ${ANDROID_DOWNLOAD_PATH} && \
     mkdir -p ${ANDROID_TOOL_HOME} && \
-    mv cmdline-tools ${ANDROID_TOOL_HOME}/tools
-ENV PATH=$PATH:${ANDROID_TOOL_HOME}/tools:${ANDROID_TOOL_HOME}/tools/bin
+    mv cmdline-tools ${ANDROID_TOOL_HOME}/latest
+ENV PATH=$PATH:${ANDROID_TOOL_HOME}/latest:${ANDROID_TOOL_HOME}/latest/bin
 
 # https://askubuntu.com/questions/885658/android-sdk-repositories-cfg-could-not-be-loaded
 RUN mkdir -p ~/.android && \
