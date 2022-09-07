@@ -61,6 +61,7 @@ RUN apt-get -qqy update && \
     gnupg \
     salt-minion \
     adb \
+    fastboot \
   && rm -rf /var/lib/apt/lists/*
 
 # 1. Launch EC2 ARM based Instance (a1.metal / a1.2xlarge): (16 Gb RAM, 32Gb Disk), Ubuntu Server 22.04 LTS (HVM) ARM x64
