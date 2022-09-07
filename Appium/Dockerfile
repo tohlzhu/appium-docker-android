@@ -96,8 +96,8 @@ ENV PATH=$PATH:${ANDROID_TOOL_HOME}/latest:${ANDROID_TOOL_HOME}/latest/bin
 RUN mkdir -p ~/.android && \
     touch ~/.android/repositories.cfg && \
 #    echo y | sdkmanager "platform-tools" && \
-    mkdir ${ANDROID_HOME}/platform-tools \
-    ln -s /usr/lib/android-sdk/platform-tools/* ${ANDROID_HOME}/platform-tools/ \
+    mkdir ${ANDROID_HOME}/platform-tools && \
+    ln -s /usr/lib/android-sdk/platform-tools/* ${ANDROID_HOME}/platform-tools/ && \
     echo y | sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION"
 ENV PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools
 
