@@ -72,7 +72,7 @@ RUN apt-get -qqy update && \
 # Set JAVA_HOME
 #===============
 # ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-arm64/jre" \
-ENV JAVA_HOME="/usr/lib/jvm/java-11-openjdk-arm64" \
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64 \
     PATH=$PATH:$JAVA_HOME/bin
 
 #=====================
@@ -99,7 +99,7 @@ RUN mkdir -p ~/.android && \
     mkdir ${ANDROID_HOME}/platform-tools && \
     ln -s /usr/lib/android-sdk/platform-tools/* ${ANDROID_HOME}/platform-tools/ && \
     echo y | sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION"
-ENV PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools
+ENV PATH=$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_BUILD_TOOLS_VERSION
 #    echo y | sdkmanager "platform-tools" && \
 
 #====================================
