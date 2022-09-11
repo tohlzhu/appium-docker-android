@@ -72,8 +72,8 @@ RUN apt-get -qqy update && \
 # Set JAVA_HOME
 #===============
 # ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-arm64/jre" \
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64 \
-    PATH=$PATH:$JAVA_HOME/bin
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64
+ENV PATH=$PATH:$JAVA_HOME/bin
 
 #=====================
 # Install Android SDK
